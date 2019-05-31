@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Todo index{% endblock %}
+
+{% block body %}
+    <h1>Todo index</h1>
+    <table class="table">
+
+        <tbody>
+        <form action="#" method="post">
+          <label for="newTodo">Ajouter une tache</label>
+
+          <input type="text" name="newTodo" id="newTodo">
+          <button class="btn">{{ button_label|default('+') }}</button>
+        </form>
+
+        {% for todo in todos %}
+        <tr>
+              {% if todo.isChecked %}
+              <td>
+                <div><s> {{ todo.name }} </s></div>
+              </td>
+                <td><form action="{{ path('todo_edit') }}" method="post">
+                    <input type="hidden" name="{{ todo.id }}" id="{{ todo.name }}"><input type="submit" value="undo"></form></td>
+              {% else %}
+                <td>
+                  <div> {{ todo.name }}  </div>
+                </td>
+                <td><form action="{{ path('todo_edit') }}" method="post">
+                    <input type="hidden" name="{{ todo.id }}" id="{{ todo.name }}"><input type="submit" value="done"></form></td>
+              {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+
+
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
